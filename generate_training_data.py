@@ -50,8 +50,19 @@ def generate_graph_seq2seq_io_data(
 
 
 def generate_train_val_test(args):
+    #built in handling for csv
     seq_length_x, seq_length_y = args.seq_length_x, args.seq_length_y
-    df = pd.read_hdf(args.traffic_df_filename)
+    ext = os.path.splitext(args.traffic_df_filename)[1].lower()
+    if ext in ('.h5', '.hdf5'):
+        df = pd.read_hdf(args.traffic_df_filename)
+    elif ext == '.csv':
+        # Assumes “timestamp” is your datetime column, and every other column is a sensor
+        df = pd.read_csv(
+            args.traffic_df_filename,
+            parse_dates=True,
+            index_col=0
+        )
+        df.index.name = "timestamp"
     # 0 is the latest observed sample.
     x_offsets = np.sort(np.concatenate((np.arange(-(seq_length_x - 1), 1, 1),)))
     # Predict the next one hour
@@ -101,9 +112,9 @@ if __name__ == "__main__":
     parser.add_argument("--dow", action='store_true',)
 
     args = parser.parse_args()
-    if os.path.exists(args.output_dir):
-        reply = str(input(f'{args.output_dir} exists. Do you want to overwrite it? (y/n)')).lower().strip()
-        if reply[0] != 'y': exit
-    else:
+    if not os.path.exists(args.output_dir):
+      #  reply = str(input(f'{args.output_dir} exists. Do you want to overwrite it? (y/n)')).lower().strip()
+      #  if reply[0] != 'y': exit
+    #else:
         os.makedirs(args.output_dir)
     generate_train_val_test(args)

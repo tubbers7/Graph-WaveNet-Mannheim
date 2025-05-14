@@ -5,9 +5,10 @@ import time
 import util
 import matplotlib.pyplot as plt
 from engine import trainer
+import wandb
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--device',type=str,default='cuda:3',help='')
+parser.add_argument('--device',type=str,default='cuda:0',help='')
 parser.add_argument('--data',type=str,default='data/METR-LA',help='data path')
 parser.add_argument('--adjdata',type=str,default='data/sensor_graph/adj_mx.pkl',help='adj data path')
 parser.add_argument('--adjtype',type=str,default='doubletransition',help='adj type')
@@ -55,7 +56,12 @@ def main():
     if args.aptonly:
         supports = None
 
-
+    # wandb setup
+    wandb.init(
+        project="graph-wavenet",
+        name=f"run-exp-{args.expid}",
+        config=vars(args)  # logs all argparse params
+    )
 
     engine = trainer(scaler, args.in_dim, args.seq_length, args.num_nodes, args.nhid, args.dropout,
                          args.learning_rate, args.weight_decay, device, supports, args.gcn_bool, args.addaptadj,
@@ -81,10 +87,15 @@ def main():
             trainx= trainx.transpose(1, 3)
             trainy = torch.Tensor(y).to(device)
             trainy = trainy.transpose(1, 3)
-            metrics = engine.train(trainx, trainy[:,0,:,:])
-            train_loss.append(metrics[0])
-            train_mape.append(metrics[1])
-            train_rmse.append(metrics[2])
+            loss, mape, rmse = engine.train(trainx, trainy[:,0,:,:])
+            train_loss.append(loss)
+            train_mape.append(mape)
+            train_rmse.append(rmse)
+            wandb.log({
+                "train_loss": loss,
+                "train_mape": mape,
+                "train_rmse": rmse
+            })
             if iter % args.print_every == 0 :
                 log = 'Iter: {:03d}, Train Loss: {:.4f}, Train MAPE: {:.4f}, Train RMSE: {:.4f}'
                 print(log.format(iter, train_loss[-1], train_mape[-1], train_rmse[-1]),flush=True)

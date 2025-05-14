@@ -4,6 +4,7 @@ import os
 import scipy.sparse as sp
 import torch
 from scipy.sparse import linalg
+import pandas as pd
 
 
 class DataLoader(object):
@@ -121,8 +122,20 @@ def load_pickle(pickle_file):
         raise
     return pickle_data
 
-def load_adj(pkl_filename, adjtype):
-    sensor_ids, sensor_id_to_ind, adj_mx = load_pickle(pkl_filename)
+def load_adj(file_path, adjtype):
+    ext = os.path.splitext(file_path)[1].lower()
+    if ext in ('.pkl', '.pickle'):
+        # your existing loader
+        sensor_ids, sensor_id_to_ind, adj_mx = load_pickle(file_path)
+    elif ext == '.csv':
+        # new CSV loader: assumes the CSV is an N×N matrix
+        # with row and column headers both = sensor IDs
+        df = pd.read_csv(file_path, index_col=0)
+        sensor_ids = list(df.columns)
+        # map each sensor ID to its column index
+        sensor_id_to_ind = {sid: i for i, sid in enumerate(sensor_ids)}
+        adj_mx = df.values.astype(np.float32)
+    #sensor_ids, sensor_id_to_ind, adj_mx = load_pickle(pkl_filename)
     if adjtype == "scalap":
         adj = [calculate_scaled_laplacian(adj_mx)]
     elif adjtype == "normlap":

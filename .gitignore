@@ -1,0 +1,6 @@
+GraphWave/
+__pycache__/
+*.pyc
+*.pkl
+*.log
+*.pth

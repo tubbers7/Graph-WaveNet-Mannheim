@@ -1,0 +1,64 @@
+_wandb:
+    value:
+        cli_version: 0.19.11
+        m: []
+        python_version: 3.9.18
+        t:
+            "1":
+                - 1
+                - 55
+            "2":
+                - 1
+                - 55
+            "3":
+                - 13
+                - 16
+                - 23
+                - 24
+                - 55
+            "4": 3.9.18
+            "5": 0.19.11
+            "8":
+                - 5
+            "12": 0.19.11
+            "13": linux-x86_64
+addaptadj:
+    value: true
+adjdata:
+    value: /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data/sensor_graph/adj_mx.csv
+adjtype:
+    value: doubletransition
+aptonly:
+    value: false
+batch_size:
+    value: 64
+data:
+    value: /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data
+device:
+    value: cuda:0
+dropout:
+    value: 0.3
+epochs:
+    value: 100
+expid:
+    value: 1
+gcn_bool:
+    value: true
+in_dim:
+    value: 2
+learning_rate:
+    value: 0.001
+nhid:
+    value: 32
+num_nodes:
+    value: 207
+print_every:
+    value: 50
+randomadj:
+    value: true
+save:
+    value: /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/models/mannheim
+seq_length:
+    value: 12
+weight_decay:
+    value: 0.0001
