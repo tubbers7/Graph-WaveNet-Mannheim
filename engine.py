@@ -3,7 +3,7 @@ from model import *
 import util
 import wandb
 class trainer():
-    def __init__(self, scaler, in_dim, seq_length, num_nodes, nhid , dropout, lrate, wdecay, device, supports, gcn_bool, addaptadj, aptinit):
+    def __init__(self, scaler, in_dim, seq_length, num_nodes, nhid , dropout, lrate, wdecay, device, supports, gcn_bool, addaptadj, aptinit, diffusion_steps):
         wandb.init(
             project="graph-wavenet",       # Your project name
             name="run-1",                  # Optional: experiment name
@@ -18,10 +18,11 @@ class trainer():
                 "gcn_bool": gcn_bool,
                 "adaptive_adj": addaptadj,
                 "aptinit": aptinit,
+                "diffusion_steps": diffusion_steps
                 #"model": "GraphWaveNet"
             }
         )
-        self.model = gwnet(device, num_nodes, dropout, supports=supports, gcn_bool=gcn_bool, addaptadj=addaptadj, aptinit=aptinit, in_dim=in_dim, out_dim=seq_length, residual_channels=nhid, dilation_channels=nhid, skip_channels=nhid * 8, end_channels=nhid * 16)
+        self.model = gwnet(device, num_nodes, dropout, supports=supports, gcn_bool=gcn_bool, addaptadj=addaptadj, aptinit=aptinit, in_dim=in_dim, out_dim=seq_length, residual_channels=nhid, dilation_channels=nhid, skip_channels=nhid * 8, end_channels=nhid * 16, diffusion_steps=diffusion_steps)
         self.model.to(device)
         self.optimizer = optim.Adam(self.model.parameters(), lr=lrate, weight_decay=wdecay)
         self.loss = util.masked_mae

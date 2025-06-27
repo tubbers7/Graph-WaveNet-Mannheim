@@ -56,10 +56,10 @@ def main():
     dataloader = util.load_dataset(args.data, args.batch_size, args.batch_size, args.batch_size)
     scaler = dataloader['scaler']
     outputs = []
-    realy = torch.Tensor(dataloader['y_test']).to(device)
+    realy = torch.Tensor(dataloader['y_val']).to(device)
     realy = realy.transpose(1,3)[:,0,:,:]
 
-    for iter, (x, y) in enumerate(dataloader['test_loader'].get_iterator()):
+    for iter, (x, y) in enumerate(dataloader['val_loader'].get_iterator()):
         testx = torch.Tensor(x).to(device)
         testx = testx.transpose(1,3)
         with torch.no_grad():
@@ -68,23 +68,26 @@ def main():
 
     yhat = torch.cat(outputs,dim=0)
     yhat = yhat[:realy.size(0),...]
-    yhat = yhat[:, -1, :, :]  
+    #yhat = yhat[:, -1, :, :]  
 
     amae = []
     amape = []
     armse = []
     for i in range(args.seq_length):
+        print(yhat.shape)
         pred = scaler.inverse_transform(yhat[:,:,i])
         real = realy[:,:,i]
+        print(pred.shape)
+        print(real.shape)
         metrics = util.metric(pred,real)
-        log = 'Evaluate best model on test data for horizon {:d}, Test MAE: {:.4f}, Test MAPE: {:.4f}, Test RMSE: {:.4f}'
+        log = 'Evaluate best model on val data for horizon {:d}, Val MAE: {:.4f}, Val MAPE: {:.4f}, Val RMSE: {:.4f}'
         print(log.format(i+1, metrics[0], metrics[1], metrics[2]))
         amae.append(metrics[0])
         amape.append(metrics[1])
         armse.append(metrics[2])
 
     #alter this to seq_len maybe
-    log = 'On average over all horizons, Test MAE: {:.4f}, Test MAPE: {:.4f}, Test RMSE: {:.4f}'
+    log = 'On average over all horizons, Val MAE: {:.4f}, Val MAPE: {:.4f}, Val RMSE: {:.4f}'
     print(log.format(np.mean(amae),np.mean(amape),np.mean(armse)))
 
 

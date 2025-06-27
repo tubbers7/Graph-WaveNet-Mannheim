@@ -1,0 +1,80 @@
+method: bayes
+metric:
+  goal: minimize
+  name: Relative Time (Process)
+parameters:
+  addaptadj:
+    distribution: categorical
+    values:
+      - "true"
+      - "false"
+  adjdata:
+    distribution: categorical
+    values:
+      #- /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Meta-LA/train_data/sensor_graph/adj_mx.pkl
+      - /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data/sensor_graph/adj_mx.csv
+  adjtype:
+    distribution: categorical
+    values:
+      - doubletransition
+  aptonly:
+    distribution: categorical
+    values:
+      - "true"
+      - "false"
+  batch_size:
+    distribution: int_uniform
+    max: 128
+    min: 32
+  data:
+    distribution: categorical
+    values:
+      - /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data
+      - /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data/x24y6
+      - /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data/x48
+  device:
+    distribution: categorical
+    values:
+      - cuda:0
+  dropout:
+    distribution: uniform
+    max: 0.6
+    min: 0.15
+  epochs:
+    distribution: int_uniform
+    max: 200
+    min: 50
+  gcn_bool:
+    distribution: categorical
+    values:
+      - "true"
+      - "false"
+  # in_dim:
+  #   distribution: int_uniform
+  #   max: 4
+  #   min: 1
+  learning_rate:
+    distribution: uniform
+    max: 0.002
+    min: 0.0005
+  nhid:
+    distribution: int_uniform
+    max: 64
+    min: 16
+  num_nodes:
+    value: 25
+  randomadj:
+    distribution: categorical
+    values:
+      - "true"
+      - "false"
+  save:
+    distribution: categorical
+    value: /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/models/hpo #make this dir first
+  seq_length:
+    value: 6
+  weight_decay:
+    distribution: uniform
+    max: 0.0002
+    min: 5e-05
+program: train.py

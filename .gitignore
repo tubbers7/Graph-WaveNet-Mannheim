@@ -4,3 +4,6 @@ __pycache__/
 *.pkl
 *.log
 *.pth
+/wandb
+sarima/
+EDA/

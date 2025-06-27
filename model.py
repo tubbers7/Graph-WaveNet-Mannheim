@@ -70,13 +70,14 @@ class gcn(nn.Module):
 
 
 class gwnet(nn.Module):
-    def __init__(self, device, num_nodes, dropout=0.3, supports=None, gcn_bool=True, addaptadj=True, aptinit=None, in_dim=2,out_dim=12,residual_channels=32,dilation_channels=32,skip_channels=256,end_channels=512,kernel_size=2,blocks=4,layers=2):
+    def __init__(self, device, num_nodes, dropout=0.3, supports=None, gcn_bool=True, addaptadj=True, aptinit=None, in_dim=2,out_dim=12,residual_channels=32,dilation_channels=32,skip_channels=256,end_channels=512,kernel_size=2,blocks=4,layers=2,diffusion_steps=2):
         super(gwnet, self).__init__()
         self.dropout = dropout
         self.blocks = blocks
         self.layers = layers
         self.gcn_bool = gcn_bool
         self.addaptadj = addaptadj
+        self.diffusion_steps = diffusion_steps
 
         self.filter_convs = nn.ModuleList()
         self.gate_convs = nn.ModuleList()
@@ -152,7 +153,7 @@ class gwnet(nn.Module):
                 additional_scope *= 2
                 #if using GCN layer then init it here
                 if self.gcn_bool:
-                    self.gconv.append(gcn(dilation_channels,residual_channels,dropout,support_len=self.supports_len))
+                    self.gconv.append(gcn(dilation_channels,residual_channels,dropout,support_len=self.supports_len, order=diffusion_steps))
 
 
         #project 

@@ -7,28 +7,31 @@
 #SBATCH --cpus-per-task=16     # Number of CPUs per GPU (16 for A100)
 #SBATCH --ntasks-per-node=1    # Number of tasks per node (1 in this case)
 
-module load devel/miniforge
-module purge
-module load compiler/gnu/13.3 #need to load explicitly otherwise tries to find gcc complier for pandas
+#module load devel/miniforge
+#module purge
+#module load compiler/gnu/13.3 #need to load explicitly otherwise tries to find gcc complier for pandas
 
-conda activate /home/ma/ma_ma/ma_tofuchs/.conda/envs/GraphWaveEnv
-#source GraphWave/bin/activate
+#conda activate /home/ma/ma_ma/ma_tofuchs/.conda/envs/GraphWaveEnv
+source GraphWave/bin/activate
 
 echo "Running on $(hostname)"
 echo "Date: $(date)"
 echo "Python version: $(python --version)"
-echo "Environment: $(conda info --envs)"
+#echo "Environment: $(conda info --envs)"
 
 module load devel/cuda/12.8
 
 
-python ~/Graph-WaveNet-Mannheim/test.py \
+
+python ~/Graph-WaveNet-Mannheim/val.py \
   --device cuda:0 \
-  --data /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Meta-LA/train_data \
-  --adjdata /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Meta-LA/train_data/sensor_graph/adj_mx.pkl \
+  --data /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data \
+  --adjdata /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data/sensor_graph/adj_mx.csv \
   --adjtype doubletransition \
   --gcn_bool \
   --addaptadj \
   --randomadj \
-  --checkpoint /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/models_exp1_best_2.72.pth \
-  --plotheatmap True
+  --checkpoint /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/models/mannheim_exp1_best_135.79.pth \
+  --plotheatmap False \
+  --num_nodes 25 \
+  --seq_length 6 
