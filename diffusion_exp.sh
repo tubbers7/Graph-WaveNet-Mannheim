@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH -p gpu_a100_il  # Use the dev_gpu_4_a100 partition with A100 GPUs dev_gpu_4, gpu_8, gpu_4
+#SBATCH -p dev_gpu_a100_il  # Use the dev_gpu_4_a100 partition with A100 GPUs dev_gpu_4, gpu_8, gpu_4
 #SBATCH -n 1                   # Number of tasks (1 for single node)
-#SBATCH -t 00:60:00            # Time limit (10 minutes for debugging purposes)
+#SBATCH -t 00:10:00            # Time limit (10 minutes for debugging purposes)
 #SBATCH --mem=10000             # Memory request (adjust as needed)
 #SBATCH --gres=gpu:1           # Request 1 GPU (adjust if you need more)
 #SBATCH --cpus-per-task=16     # Number of CPUs per GPU (16 for A100)
