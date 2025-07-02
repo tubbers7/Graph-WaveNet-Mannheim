@@ -1,0 +1,24 @@
+# config_final.yaml
+
+device: cuda:0
+data: /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data/x6y1
+adjdata: /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data/sensor_graph/adj_mx.csv
+adjtype: doubletransition
+gcn_bool: true
+aptonly: false
+addaptadj: true
+randomadj: true
+evaluate_only: true
+seq_length: 6
+nhid: 119
+in_dim: 2
+num_nodes: 25
+batch_size: 194
+learning_rate: 0.000651871326078316
+dropout: 0.007147683796419103
+weight_decay: 0.000008958680754119338
+epochs: 1000
+print_every: 50
+save: /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/models/best
+expid: 1
+diffusion_steps: 2

@@ -55,24 +55,24 @@ def get_args():
         parser.add_argument('--data',type=str,default="/pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data/x6y1",help='data path')
         parser.add_argument('--adjdata',type=str,default="/pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data/sensor_graph/adj_mx.csv",help='adj data path')
         parser.add_argument('--adjtype',type=str,default='doubletransition',help='adj type')
-        parser.add_argument('--gcn_bool',    type=str2bool, default=False)
+        parser.add_argument('--gcn_bool',    type=str2bool, default=True)
         parser.add_argument('--aptonly',     type=str2bool, default=False)
-        parser.add_argument('--addaptadj',   type=str2bool, default=False)
-        parser.add_argument('--randomadj',   type=str2bool, default=False)
+        parser.add_argument('--addaptadj',   type=str2bool, default=True)
+        parser.add_argument('--randomadj',   type=str2bool, default=True)
         parser.add_argument('--evaluate_only',   type=str2bool, default=True)
         # parser.add_argument('--gcn_bool',action='store_true',help='whether to add graph convolution layer')
         # parser.add_argument('--aptonly',action='store_true',help='whether only adaptive adj')
         # parser.add_argument('--addaptadj',action='store_true',help='whether add adaptive adj')
         # parser.add_argument('--randomadj',action='store_true',help='whether random initialize adaptive adj')
-        parser.add_argument('--seq_length',type=int,default=12,help='')
+        parser.add_argument('--seq_length',type=int,default=6,help='')
         parser.add_argument('--nhid',type=int,default=32,help='')
         parser.add_argument('--in_dim',type=int,default=2,help='inputs dimension')
-        parser.add_argument('--num_nodes',type=int,default=207,help='number of nodes')
+        parser.add_argument('--num_nodes',type=int,default=25,help='number of nodes')
         parser.add_argument('--batch_size',type=int,default=64,help='batch size')
         parser.add_argument('--learning_rate',type=float,default=0.001,help='learning rate')
         parser.add_argument('--dropout',type=float,default=0.3,help='dropout rate')
         parser.add_argument('--weight_decay',type=float,default=0.0001,help='weight decay rate')
-        parser.add_argument('--epochs',type=int,default=500,help='')
+        parser.add_argument('--epochs',type=int,default=100,help='')
         parser.add_argument('--print_every',type=int,default=50,help='')
         #parser.add_argument('--seed',type=int,default=99,help='random seed')
         parser.add_argument('--save',type=str,default='./garage/metr',help='save path')
@@ -212,7 +212,7 @@ def main():
 
         log = 'Epoch: {:03d}, Train Loss: {:.4f}, Train MAPE: {:.4f}, Train RMSE: {:.4f}, Valid Loss: {:.4f}, Valid MAPE: {:.4f}, Valid RMSE: {:.4f}, Training Time: {:.4f}/epoch'
         print(log.format(i, mtrain_loss, mtrain_mape, mtrain_rmse, mvalid_loss, mvalid_mape, mvalid_rmse, (t2 - t1)),flush=True)
-        if args.evalute_only == False:
+        if args.evaluate_only == False:
             #torch.save(engine.model.state_dict(), args.save+"_epoch_"+str(i)+"_"+str(round(mvalid_loss,2))+".pth")
             for i in range(1, args.epochs+1):
                 # … compute mvalid_loss …
@@ -244,7 +244,11 @@ def main():
 
 
     print("Training finished")
-    print("The valid loss on best model is", str(round(his_loss[bestid],4)))
+    save_path = os.path.join(args.save, f"best_vloss_{mvalid_loss:.2f}.pth")
+    torch.save(engine.model.state_dict(), 
+                            save_path)
+    print(f"Model saved successfully as {save_path}")
+    #print("The valid loss on best model is", str(round(his_loss[bestid],4)))
 
 
     # amae = []

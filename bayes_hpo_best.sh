@@ -23,4 +23,4 @@ module load devel/cuda/12.8
 
 
 #python ~/Graph-WaveNet-Mannheim/train.py --num_nodes 25 --seq_length 6 --gcn_bool --adjtype doubletransition --addaptadj  --randomadj --data /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data --adjdata /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data/sensor_graph/adj_mx.csv --save '/pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/models/mannheim'
-python ~/Graph-WaveNet-Mannheim/train.py --config bayes_hyperband.yaml
+python ~/Graph-WaveNet-Mannheim/train.py --config bayes.yaml
