@@ -21,3 +21,5 @@ print_every: 50
 save: /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/models/best
 expid: 100
 diffusion_steps: 2
+checkpoint: /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/models/best/best_vloss_94.79.pth
+plotheatmap: True
