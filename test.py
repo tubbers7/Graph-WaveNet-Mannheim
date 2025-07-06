@@ -142,7 +142,32 @@ def main():
     #alter this to seq_len maybe
     log = 'On average over all horizons, Test MAE: {:.4f}, Test MAPE: {:.4f}, Test RMSE: {:.4f}'
     print(log.format(np.mean(amae),np.mean(amape),np.mean(armse)))
+    
+    # … after you’ve built yhat and realy, and sliced to horizon 0 …
+    # yhat: torch.Tensor, shape [N, num_sensors, seq_length]
+    # realy: torch.Tensor, shape [N, num_sensors, seq_length]
+    # Here you took only seq_length=6, but now only want the 1‐step ahead:
+    h = 0
+    # Move to NumPy and inverse‐scale
+    pred_np = scaler.inverse_transform(yhat[:, :, h].cpu().numpy())   # [N, 25]
+    real_np = realy[:, :, h].cpu().numpy()                             # [N, 25]
 
+    num_sensors = pred_np.shape[1]
+    mae_list, mape_list, rmse_list = [], [], []
+
+    for s in range(num_sensors):
+        p = pred_np[:, s]
+        r = real_np[:, s]
+        # sensor‐wise metrics
+        mae  = np.mean(np.abs(p - r))
+        mape = np.mean(np.abs((p - r) / r + 0.00001)) * 100
+        rmse = np.sqrt(np.mean((p - r) ** 2))
+
+        mae_list.append(mae)
+        mape_list.append(mape)
+        rmse_list.append(rmse)
+
+        print(f"Sensor {s:02d} — MAE: {mae:.4f}, MAPE: {mape:.2f}%, RMSE: {rmse:.4f}")
 
     if args.plotheatmap == True:
         adp = F.softmax(F.relu(torch.mm(model.nodevec1, model.nodevec2)), dim=1)

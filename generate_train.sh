@@ -20,4 +20,4 @@ echo "Environment: $(conda info --envs)"
 
 module load devel/cuda/12.4
 
-python ~/Graph-WaveNet-Mannheim/generate_training_data.py --seq_length_x 6 --seq_length_y 1 --output_dir /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data/x6y1_nan_drop --traffic_df_filename /home/ma/ma_ma/ma_tofuchs/Graph-WaveNet-Mannheim/timeseries_data_with-NaN.csv
+python ~/Graph-WaveNet-Mannheim/generate_training_data.py --seq_length_x 6 --seq_length_y 1 --output_dir /home/ma/ma_ma/ma_tofuchs/Graph-WaveNet-Mannheim/Datasets/Mannheim/train_data/x6y1 --traffic_df_filename /home/ma/ma_ma/ma_tofuchs/Graph-WaveNet-Mannheim/imputed_dataset_grin_full.csv

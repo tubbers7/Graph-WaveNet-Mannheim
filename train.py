@@ -52,8 +52,8 @@ def get_args():
 
         # Define every flag you expect the sweep to inject
         parser.add_argument('--device',type=str,default='cuda:0',help='')
-        parser.add_argument('--data',type=str,default="/pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data/x6y1",help='data path')
-        parser.add_argument('--adjdata',type=str,default="/pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/Datasets/Mannheim/train_data/sensor_graph/adj_mx.csv",help='adj data path')
+        parser.add_argument('--data',type=str,default="/home/ma/ma_ma/ma_tofuchs/Graph-WaveNet-Mannheim/Datasets/Mannheim/train_data/x6y1",help='data path')
+        parser.add_argument('--adjdata',type=str,default="/home/ma/ma_ma/ma_tofuchs/Graph-WaveNet-Mannheim/adj_mx.csv",help='adj data path')
         parser.add_argument('--adjtype',type=str,default='doubletransition',help='adj type')
         parser.add_argument('--gcn_bool',    type=str2bool, default=True)
         parser.add_argument('--aptonly',     type=str2bool, default=False)
@@ -202,16 +202,17 @@ def main():
 
         # minimal, combined logging
         wandb.log({
-            "train/loss": mtrain_loss,
-            "train/mape": mtrain_mape,
-            "train/rmse": mtrain_rmse,
-            "val/loss":   mvalid_loss,
-            "val/mape":   mvalid_mape,
-            "val/rmse":   mvalid_rmse
+            "train_loss": mtrain_loss,
+            "train_mape": mtrain_mape,
+            "train_rmse": mtrain_rmse,
+            "val_loss":   mvalid_loss,
+            "val_mape":   mvalid_mape,
+            "val_rmse":   mvalid_rmse
         }, step=i)
 
         log = 'Epoch: {:03d}, Train Loss: {:.4f}, Train MAPE: {:.4f}, Train RMSE: {:.4f}, Valid Loss: {:.4f}, Valid MAPE: {:.4f}, Valid RMSE: {:.4f}, Training Time: {:.4f}/epoch'
         print(log.format(i, mtrain_loss, mtrain_mape, mtrain_rmse, mvalid_loss, mvalid_mape, mvalid_rmse, (t2 - t1)),flush=True)
+        torch.save(engine.model.state_dict(), args.save+"_epoch_"+str(i)+"_"+str(round(mvalid_loss,2))+".pth")
         if args.evaluate_only == False:
             #torch.save(engine.model.state_dict(), args.save+"_epoch_"+str(i)+"_"+str(round(mvalid_loss,2))+".pth")
             for i in range(1, args.epochs+1):

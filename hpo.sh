@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -p gpu_a100_il  # Use the dev_gpu_4_a100 partition with A100 GPUs dev_gpu_4, gpu_8, gpu_4
+#SBATCH -p gpu_h100_il  # Use the dev_gpu_4_a100 partition with A100 GPUs dev_gpu_4, gpu_8, gpu_4
 #SBATCH -n 1                   # Number of tasks (1 for single node)
 #SBATCH -t 02:00:00            # Time limit (10 minutes for debugging purposes)
 #SBATCH --mem=10000             # Memory request (adjust as needed)
@@ -21,5 +21,5 @@ echo "Python version: $(python --version)"
 
 module load devel/cuda/12.8
 
-wandb agent GraphWave/graph-wavenet/bamkibpv
+wandb agent GraphWave/graph-wavenet/4nag2q7z
 
