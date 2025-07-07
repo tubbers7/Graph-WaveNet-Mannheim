@@ -1,0 +1,69 @@
+Running on uc2n901.localdomain
+Date: Mon Jul  7 08:03:39 PM CEST 2025
+Python version: Python 3.9.18
+/home/ma/ma_ma/ma_tofuchs/Graph-WaveNet-Mannheim/test.py:163: RuntimeWarning: divide by zero encountered in divide
+  mape = np.mean(np.abs((p - r) / r + 0.00001)) * 100
+yaml tested was that from bayes_hyperband.yaml
+model load successfully
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+torch.Size([253, 1, 25, 6])
+yhat shape is: torch.Size([4696, 1, 25, 6]) and realy is shape torch.Size([4696, 25, 1])
+Evaluate best model on test data for horizon 1, Test MAE: 70.4920, Test MAPE: 0.1144, Test RMSE: 136.6675
+On average over all horizons, Test MAE: 70.4920, Test MAPE: 0.1144, Test RMSE: 136.6675
+Sensor 00 — MAE: 94.0318, MAPE: 11.01%, RMSE: 173.4960
+Sensor 01 — MAE: 122.3755, MAPE: 7.38%, RMSE: 185.6442
+Sensor 02 — MAE: 28.3393, MAPE: 9.37%, RMSE: 60.5963
+Sensor 03 — MAE: 53.7928, MAPE: inf%, RMSE: 121.7239
+Sensor 04 — MAE: 99.1144, MAPE: inf%, RMSE: 158.0387
+Sensor 05 — MAE: 30.6671, MAPE: 10.59%, RMSE: 53.8982
+Sensor 06 — MAE: 98.3948, MAPE: 13.24%, RMSE: 197.5572
+Sensor 07 — MAE: 116.0057, MAPE: 9.97%, RMSE: 175.3852
+Sensor 08 — MAE: 36.3232, MAPE: 7.78%, RMSE: 53.3762
+Sensor 09 — MAE: 21.9698, MAPE: 12.74%, RMSE: 37.0743
+Sensor 10 — MAE: 20.9676, MAPE: 17.92%, RMSE: 36.9911
+Sensor 11 — MAE: 30.6299, MAPE: 8.26%, RMSE: 44.9616
+Sensor 12 — MAE: 104.8134, MAPE: 9.58%, RMSE: 159.4760
+Sensor 13 — MAE: 115.1415, MAPE: 10.03%, RMSE: 217.0318
+Sensor 14 — MAE: 59.4769, MAPE: 10.14%, RMSE: 95.9172
+Sensor 15 — MAE: 96.5218, MAPE: 11.76%, RMSE: 153.3553
+Sensor 16 — MAE: 26.8993, MAPE: 8.28%, RMSE: 39.7149
+Sensor 17 — MAE: 101.9567, MAPE: 9.60%, RMSE: 153.4615
+Sensor 18 — MAE: 40.5407, MAPE: inf%, RMSE: 63.7479
+Sensor 19 — MAE: 185.0925, MAPE: 10.09%, RMSE: 318.6464
+Sensor 20 — MAE: 39.7909, MAPE: 9.16%, RMSE: 59.8110
+Sensor 21 — MAE: 48.2916, MAPE: 7.86%, RMSE: 67.7296
+Sensor 22 — MAE: 27.7085, MAPE: 8.62%, RMSE: 42.4348
+Sensor 23 — MAE: 64.5806, MAPE: 8.17%, RMSE: 102.6670
+Sensor 24 — MAE: 99.1926, MAPE: 8.12%, RMSE: 147.4058
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc2n901
+Job ID: 660416
+Cluster: uc3
+User/Group: ma_tofuchs/ma_ma
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 16
+CPU Utilized: 00:00:10
+CPU Efficiency: 0.88% of 00:18:56 core-walltime
+Job Wall-clock time: 00:01:11
+Memory Utilized: 913.97 MB
+Memory Efficiency: 9.14% of 9.77 GB (9.77 GB/node)

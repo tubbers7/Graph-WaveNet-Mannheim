@@ -16,10 +16,10 @@ batch_size: 253
 learning_rate: 0.000533718397820362
 dropout: 0.5384147073000745
 weight_decay: 0.00000365560764367765
-epochs: 1000
+epochs: 187
 print_every: 50
 save: /home/ma/ma_ma/ma_tofuchs/Graph-WaveNet-Mannheim/models
 expid: 7
 diffusion_steps: 2
-#checkpoint: /pfs/work9/workspace/scratch/ma_tofuchs-GraphWave-Seminar/models/best/best_vloss_94.79.pth
-#plotheatmap: True
+checkpoint: /home/ma/ma_ma/ma_tofuchs/Graph-WaveNet-Mannheim/hpo_models/best_vloss_84.14.pth
+plotheatmap: True
